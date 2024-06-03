@@ -13,7 +13,7 @@ function App() {
       <Route path="/" element={<UserLogin />} />
       <Route path="/landing" element={< PrivateRoute element={LandingPage} />} />
       <Route path="/selection" element={<SelectionPage />} />
-      <Route path="/texteditor" element={<TextEditor />} />
+      <Route path="/texteditor/:document" element={<TextEditor />} />
     </Routes>
     </FirebaseProvider>
   );

@@ -35,7 +35,29 @@ const createDocument = async (req,res)=>{
     }
 }
 
+const getDocuments = async (req, res) => {
+    const { firebaseuid } = req.params; // Extract firebaseuid from params
+  
+    try {
+      // Find the user with the specified firebaseuid
+      const user = await User.findOne({ firebaseuid });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found.' });
+      }
+  
+      // Populate documents associated with the user
+      await user.populate('documents');
+  
+      res.status(200).json(user.documents); // Send the populated documents
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+      res.status(500).json({ error: 'Failed to get documents.' });
+    }
+  };
+  
 module.exports = {
     createUser,
     createDocument,
+    getDocuments,
 };

@@ -1,44 +1,71 @@
 /* LandingPage.css */
 
 .containerl {
-    display: flex;
-    height: 100vh; /* Ensures the container takes full viewport height */
-  }
-  
-  .sidebar {
-    width: 200px;
-    background-color: #f0f0f0;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow to the sidebar */
-  }
-  
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sidebar li {
-    margin: 10px 0;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 4px; /* Adds rounded corners to the list items */
-    transition: background-color 0.3s, color 0.3s; /* Adds a smooth transition for the background and text color */
-  }
-  
-  .sidebar li:hover {
-    background-color: #ddd; /* Changes background on hover */
-  }
-  
-  .sidebar li.active {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-    background-color: #ffffff; /* White background for content area */
-    overflow-y: auto; /* Allows vertical scrolling if content overflows */
-  }
-  
+  display: flex;
+  height: 100vh; /* Ensures the container takes full viewport height */
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow to the sidebar */
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px; /* Adds rounded corners to the list items */
+  transition: background-color 0.3s, color 0.3s; /* Adds a smooth transition for the background and text color */
+}
+
+.sidebar li:hover {
+  background-color: #ddd; /* Changes background on hover */
+}
+
+.sidebar li.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff; /* White background for content area */
+  overflow-y: auto; /* Allows vertical scrolling if content overflows */
+}
+
+/* Adjustments for document box */
+
+.document-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px; /* Add some space between sidebar and document box */
+}
+
+.document-item {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.document-item:hover {
+  transform: translateY(-5px);
+}
+
+.document-item h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}

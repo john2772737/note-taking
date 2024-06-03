@@ -5,7 +5,7 @@ const Document = new Schema({
  
   name:String,
   data: Object,
-  user: { type:String, ref: 'User' },
+  firebaseuid: { type:String, ref: 'User' },
   createdAt: { type: Date, default: Date.now },
   
 })
