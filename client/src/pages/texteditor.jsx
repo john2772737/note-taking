@@ -13,16 +13,10 @@ const TOOLBAR_OPTIONS = [
   [{ script: "sub" }, { script: "super" }],
   [{ align: [] }],
   ["blockquote", "code-block"],
-[  { size: [ 'small', false, 'large', 'huge' ]}
-]
+  { size: [ 'small', false, 'large', 'huge' ]}
 ]
 
-export default function textEditor() {
-  
- 
-
-  
- 
+const TextEditor = () => {
   const wrapperRef = useCallback(wrapper => {
     if (wrapper == null) return
 
@@ -35,5 +29,8 @@ export default function textEditor() {
     })
    
   }, [])
+  
   return <div className="container" ref={wrapperRef}></div>
 }
+
+export default TextEditor;

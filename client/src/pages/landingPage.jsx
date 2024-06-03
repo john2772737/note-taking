@@ -42,6 +42,7 @@ function LandingPage() {
       .post("http://localhost:3000/user/createDocument", {
         name: documentName,
         firebaseuid: firebaseuid,
+        data:""
       })
       .then(function (response) {
         console.log(response);
