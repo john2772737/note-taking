@@ -6,18 +6,23 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS for modal
 import { Button, Modal } from "react-bootstrap"; // Importing Bootstrap components for the modal
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+
 function LandingPage() {
   const { currentUser } = useFirebase();
   const firebaseuid = currentUser.uid;
   const navigate = useNavigate();
 
-  const [showModal, setShowModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showCollaborateModal, setShowCollaborateModal] = useState(false);
   const [documentName, setDocumentName] = useState("");
+  const [collaborationCode, setCollaborationCode] = useState("");
   const [documents, setDocuments] = useState([]);
-  console.log(firebaseuid);
 
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  const handleCloseCreateModal = () => setShowCreateModal(false);
+  const handleShowCreateModal = () => setShowCreateModal(true);
+
+  const handleCloseCollaborateModal = () => setShowCollaborateModal(false);
+  const handleShowCollaborateModal = () => setShowCollaborateModal(true);
 
   const fetchDocuments = async () => {
     try {
@@ -42,14 +47,13 @@ function LandingPage() {
       .post("http://localhost:3000/user/createDocument", {
         name: documentName,
         firebaseuid: firebaseuid,
-        data:""
+        data: "",
       })
       .then(function (response) {
         console.log(response);
         toast.success("Document created successfully"); // Show a success message after saving the document
         fetchDocuments(firebaseuid);
-        handleClose();
-         // Close the modal after saving
+        handleCloseCreateModal(); // Close the modal after saving
       })
       .catch(function (error) {
         console.log(error);
@@ -57,15 +61,21 @@ function LandingPage() {
   };
 
   const handleCreateDocument = () => {
-    handleShow(); // Show the modal
+    handleShowCreateModal(); // Show the create document modal
   };
 
   const handleCollaborate = () => {
-    // Handle collaborate functionality
+    handleShowCollaborateModal(); // Show the collaborate modal
   };
-  const handleDocument = (document) => {
-    navigate(`/texteditor/${document}`); // Navigate to the document page
+
+  const handleDocument = (documentId) => {
+    navigate(`/texteditor/${documentId}`); // Navigate to the document page
   };
+
+  const handleJoinCollaboration = () => {
+    navigate(`/texteditor/${collaborationCode}`); // Navigate to the document page with the collaboration code
+  };
+
   return (
     <div className="containerl">
       <Toaster />
@@ -76,7 +86,7 @@ function LandingPage() {
         </ul>
       </div>
       <div className="content">
-        <Modal show={showModal} onHide={handleClose}>
+        <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
           <Modal.Header closeButton>
             <Modal.Title>Create Document</Modal.Title>
           </Modal.Header>
@@ -90,7 +100,7 @@ function LandingPage() {
             />
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={handleCloseCreateModal}>
               Close
             </Button>
             <Button variant="primary" onClick={handleSaveDocument}>
@@ -99,9 +109,30 @@ function LandingPage() {
           </Modal.Footer>
         </Modal>
 
+        <Modal show={showCollaborateModal} onHide={handleCloseCollaborateModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Collaborate</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <input
+              type="text"
+              placeholder="Enter Collaboration Code"
+              value={collaborationCode}
+              onChange={(e) => setCollaborationCode(e.target.value)}
+              className="form-control"
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseCollaborateModal}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleJoinCollaboration}>
+              Join
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
         {/* Render documents */}
-
-
         <div className="document-box">
           {documents.map((document, index) => (
             <div

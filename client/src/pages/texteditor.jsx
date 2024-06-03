@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
+import { useParams } from 'react-router-dom'
 import Quill from "quill"
 import "quill/dist/quill.snow.css"
 import '../assets/styles.css'
 
-const SAVE_INTERVAL_MS = 2000
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],
@@ -13,10 +13,13 @@ const TOOLBAR_OPTIONS = [
   [{ script: "sub" }, { script: "super" }],
   [{ align: [] }],
   ["blockquote", "code-block"],
-  { size: [ 'small', false, 'large', 'huge' ]}
+  [{ size: ['small', false, 'large', 'huge'] }]
 ]
 
-const TextEditor = () => {
+export default function TextEditor() {
+  const { documentId } = useParams(); // Renaming to avoid conflict
+  console.log(documentId)
+
   const wrapperRef = useCallback(wrapper => {
     if (wrapper == null) return
 
@@ -27,10 +30,7 @@ const TextEditor = () => {
       theme: "snow",
       modules: { toolbar: TOOLBAR_OPTIONS },
     })
-   
   }, [])
-  
+
   return <div className="container" ref={wrapperRef}></div>
 }
-
-export default TextEditor;
