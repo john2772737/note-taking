@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './LandingPage.css'; // You can add some styling in this CSS file
-
+import {useFirebase} from '../utils/context'
 function LandingPage() {
   const [selectedOption, setSelectedOption] = useState('create');
-
+  const { currentUser } = useFirebase();
   const handleCreateDocument = () => {
 ''
   };
