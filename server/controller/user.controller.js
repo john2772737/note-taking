@@ -15,7 +15,25 @@ const createUser = async (req, res) => {
     }
 };
 
-  
+const createDocument = async (req,res)=>{
+    try {
+        const documentReq = req.body;
+        const document = await Document.findOne({ name: documentReq.name }); // Use findOne to find a single document
+        if (document) {
+            return res.status(400).json({ error: 'Document already exists.' });
+        }
+        const newDocument = await Document.create(documentReq);
+
+        const user = await User.findOne({ firebaseuid: documentReq.firebaseuid }); 
+        user.documents.push(newDocument._id);
+        await user.save();
+
+
+        res.status(201).json(newDocument);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create document.' });
+    }
+}
 
 module.exports = {
     createUser,
