@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS for modal
 import { Button, Modal } from "react-bootstrap"; // Importing Bootstrap components for the modal
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../component/Navbar";
 
 function LandingPage() {
   const { currentUser } = useFirebase();
@@ -77,15 +78,17 @@ function LandingPage() {
   };
 
   return (
-    <div className="containerl">
+    <div className="containerl pt-20">
+      <Navbar />
       <Toaster />
-      <div className="sidebar">
+      <div className="sidebar bg-[#181616] border-r-2 border-[#808080] ">
         <ul>
-          <li onClick={handleCreateDocument}>Create Document</li>
+          <li onClick={handleCreateDocument}>Create Note</li>
           <li onClick={handleCollaborate}>Collaborate</li>
         </ul>
       </div>
-      <div className="content">
+      <div className="content bg-[#201C1C]">
+        <h1 className="text-4xl font-bold text-white">NOTES</h1>
         <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
           <Modal.Header closeButton>
             <Modal.Title>Create Document</Modal.Title>
