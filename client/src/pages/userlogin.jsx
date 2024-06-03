@@ -4,6 +4,7 @@ import { auth } from '../utils/firebase';
 import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import PreLoader from '../component/PreLoader';
 
 function UserLogin() {
     const [user, setUser] = useState(null);
@@ -48,6 +49,7 @@ function UserLogin() {
 
     return (
         <div>
+            <PreLoader />
             <Toaster />
             <button onClick={handleGoogleSignIn}>Sign in with Google</button>
         </div>
