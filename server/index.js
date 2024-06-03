@@ -9,7 +9,7 @@ app.use(cors());
 
 const mongoURI = 'mongodb+srv://johnregulacion5555:kTe1RLFcpEVHpBFv@cluster0.t1xjjrc.mongodb.net/<your-database-name>?retryWrites=true&w=majority';
 
-app.use(userRouter);
+app.use('/user',userRouter);
 
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,

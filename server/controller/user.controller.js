@@ -1,16 +1,22 @@
 const mongoose = require('mongoose');
+const User = require('../models/user.models.js');
 
-const createUser = (req, res) => {
-    const user = new User(req.body);
-    user.save((err, savedUser) => {
-        if (err) {
-            res.status(500).json({ error: err });
-        } else {
-            res.status(200).json({ message: 'User created successfully', user: savedUser });
+const createUser = async (req, res) => {
+    try {
+        const userReq = req.body;
+        const user = await User.findOne({ email: userReq.email }); // Use findOne to find a single document
+        if (user) {
+            return res.status(400).json({ error: 'User already exists.' });
         }
-    });
+        const newUser = await User.create(userReq);
+        res.status(201).json(newUser);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create user.' });
+    }
 };
 
-module.exports={
+  
+
+module.exports = {
     createUser,
-}
+};
