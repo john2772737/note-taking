@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
+import { GoogleAuthProvider, signInWithRedirect, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../utils/firebase';
 import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function UserLogin() {
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     const saveUserToMongoDB = async (user) => {
         try {
@@ -13,11 +15,11 @@ function UserLogin() {
                 firebaseuid: user.uid,
                 name: user.displayName,
                 email: user.email,
-                imageUrl: user.imageUrl
+                imageUrl: user.photoURL // Fixed to use correct property
             });
 
             if (response.status === 201) {
-                toast.success('Successfully saved');
+                toast.success('User saved to MongoDB');
             } else {
                 toast.error(response.statusText);
             }
@@ -27,17 +29,22 @@ function UserLogin() {
         }
     };
 
-    const handleGoogleSignIn = async () => {
+    const handleGoogleSignIn = () => {
         const provider = new GoogleAuthProvider();
-        try {
-            const result = await signInWithRedirect(auth, provider);
-            setUser(result.user);
-            saveUserToMongoDB(result.user);
-        } catch (error) {
-            console.error('Google sign-in failed. Error:', error);
-            toast.error('Google sign-in failed');
-        }
+        signInWithRedirect(auth, provider);
     };
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                setUser(user);
+                await saveUserToMongoDB(user);
+                navigate('/landing');
+            }
+        });
+
+        return () => unsubscribe();
+    }, [navigate]);
 
     return (
         <div>

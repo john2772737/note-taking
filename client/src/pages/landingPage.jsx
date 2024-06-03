@@ -13,7 +13,7 @@ function LandingPage() {
   };
 
   return (
-    <div className="container">
+    <div className="containerl">
       <div className="sidebar">
         <ul>
           <li 

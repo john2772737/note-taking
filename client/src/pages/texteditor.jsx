@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import Quill from "quill"
 import "quill/dist/quill.snow.css"
-import '../pages/style.css'
+import '../assets/styles.css'
 
 const SAVE_INTERVAL_MS = 2000
 const TOOLBAR_OPTIONS = [
