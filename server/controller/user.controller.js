@@ -37,4 +37,5 @@ const createDocument = async (req,res)=>{
 
 module.exports = {
     createUser,
+    createDocument,
 };
