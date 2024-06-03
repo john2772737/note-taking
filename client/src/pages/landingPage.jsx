@@ -18,10 +18,6 @@ const TOOLBAR_OPTIONS = [
 
 export default function LandingPage() {
   
- 
-
-  
- 
   const wrapperRef = useCallback(wrapper => {
     if (wrapper == null) return
 
