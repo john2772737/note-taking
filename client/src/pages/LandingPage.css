@@ -1,0 +1,44 @@
+/* LandingPage.css */
+
+.container {
+    display: flex;
+    height: 100vh; /* Ensures the container takes full viewport height */
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow to the sidebar */
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar li {
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px; /* Adds rounded corners to the list items */
+    transition: background-color 0.3s, color 0.3s; /* Adds a smooth transition for the background and text color */
+  }
+  
+  .sidebar li:hover {
+    background-color: #ddd; /* Changes background on hover */
+  }
+  
+  .sidebar li.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff; /* White background for content area */
+    overflow-y: auto; /* Allows vertical scrolling if content overflows */
+  }
+  

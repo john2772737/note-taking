@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../models/user.models.js');
-
+const Document= require('../models/document.models.js')
 const createUser = async (req, res) => {
     try {
         const userReq = req.body;

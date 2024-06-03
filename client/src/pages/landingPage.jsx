@@ -1,38 +1,40 @@
-import { useCallback, useEffect, useState } from "react"
-import Quill from "quill"
-import "quill/dist/quill.snow.css"
-import '../pages/style.css'
+import React, { useState } from 'react';
+import './LandingPage.css'; // You can add some styling in this CSS file
 
-const SAVE_INTERVAL_MS = 2000
-const TOOLBAR_OPTIONS = [
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ font: [] }],
-  [{ list: "ordered" }, { list: "bullet" }],
-  ["bold", "italic", "underline"],
-  [{ color: [] }, { background: [] }],
-  [{ script: "sub" }, { script: "super" }],
-  [{ align: [] }],
-  ["image", "blockquote", "code-block"],
-  ["clean"],
-]
+function LandingPage() {
+  const [selectedOption, setSelectedOption] = useState('create');
 
-export default function LandingPage() {
-  
- 
+  const handleCreateDocument = () => {
+''
+  };
 
-  
- 
-  const wrapperRef = useCallback(wrapper => {
-    if (wrapper == null) return
+  const handleCollaborate = () => {
+ ''
+  };
 
-    wrapper.innerHTML = ""
-    const editor = document.createElement("div")
-    wrapper.append(editor)
-    const q = new Quill(editor, {
-      theme: "snow",
-      modules: { toolbar: TOOLBAR_OPTIONS },
-    })
-   
-  }, [])
-  return <div className="container" ref={wrapperRef}></div>
+  return (
+    <div className="container">
+      <div className="sidebar">
+        <ul>
+          <li 
+            className={selectedOption === 'create' ? 'active' : ''} 
+            onClick={handleCreateDocument}
+          >
+            Create Document
+          </li>
+          <li 
+            className={selectedOption === 'collab' ? 'active' : ''} 
+            onClick={handleCollaborate}
+          >
+            Collaborate
+          </li>
+        </ul>
+      </div>
+      <div className="content">
+       
+      </div>
+    </div>
+  );
 }
+
+export default LandingPage;
