@@ -20,10 +20,13 @@
 
 .sidebar li {
   margin: 10px 0;
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
-  border-radius: 4px; /* Adds rounded corners to the list items */
+  background-color: #209CF4;
+  border-radius: 10px; /* Adds rounded corners to the list items */
   transition: background-color 0.3s, color 0.3s; /* Adds a smooth transition for the background and text color */
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .sidebar li:hover {
