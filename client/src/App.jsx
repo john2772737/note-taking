@@ -5,6 +5,7 @@ import UserLogin from "./pages/userlogin"; // Capitalized the component name and
 import TextEditor from "./pages/texteditor";
 import { FirebaseProvider } from "./utils/context";
 import PrivateRoute from './utils/privateRoute'
+import Footer from "./component/Footer";
 function App() {
   return (
     <FirebaseProvider>
@@ -15,6 +16,7 @@ function App() {
       <Route path="/selection" element={<SelectionPage />} />
       <Route path="/texteditor/:documentId" element={<TextEditor />} />
     </Routes>
+    <Footer/>
     </FirebaseProvider>
   );
 }
