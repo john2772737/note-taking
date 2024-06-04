@@ -4,6 +4,8 @@ import Quill from "quill"
 import "quill/dist/quill.snow.css"
 import '../assets/styles.css'
 import { io } from "socket.io-client"
+import Navbar from "../component/Navbar2"
+
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],
@@ -58,5 +60,11 @@ export default function TextEditor() {
     setQuill(q)
   }, [])
 
-  return <div className="container" ref={wrapperRef}></div>
+  return (
+    <div>
+      <Navbar/>
+      <div className="container pt-20" ref={wrapperRef} ></div>
+      
+    </div>
+  );
 }

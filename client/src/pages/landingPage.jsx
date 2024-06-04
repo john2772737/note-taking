@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./LandingPage.css"; // You can add some additional styling in this CSS file
 import { useFirebase } from "../utils/context";
 import axios from "axios";
-
-import { Button, Modal } from "react-bootstrap"; // Importing Bootstrap components for the modal
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
@@ -84,70 +82,95 @@ function LandingPage() {
       <div className="sidebar bg-[#181616] border-r-2 border-[#808080] ">
         <ul>
           <li onClick={handleCreateDocument}>Create Note</li>
-          <li onClick={handleCollaborate}>Collaborate</li>
+          <li onClick={handleCollaborate}>Join</li>
         </ul>
+        <button className="absolute text-xl text-white font-bold bottom-5 text-center ml-10">Logout</button>
       </div>
       <div className="content bg-[#201C1C]">
         <h1 className="text-4xl font-bold text-white">NOTES</h1>
-        <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Create Document</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <input
-              type="text"
-              placeholder="Document Name"
-              value={documentName}
-              onChange={(e) => setDocumentName(e.target.value)}
-              className="form-control"
-            />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseCreateModal}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleSaveDocument}>
-              Save
-            </Button>
-          </Modal.Footer>
-        </Modal>
 
-        <Modal show={showCollaborateModal} onHide={handleCloseCollaborateModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Collaborate</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <input
-              type="text"
-              placeholder="Enter Collaboration Code"
-              value={collaborationCode}
-              onChange={(e) => setCollaborationCode(e.target.value)}
-              className="form-control"
-            />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseCollaborateModal}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleJoinCollaboration}>
-              Join
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        {/* CREATE DOCU MODAL */}
+        {showCreateModal && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-[#201C1C ]">
+            <div className="bg-[#181616] rounded-lg overflow-hidden shadow-lg max-w-md w-full">
+              <div className="p-4 border-b">
+                <h2 className="text-xl font-semibold text-white">Create Document</h2>
+              </div>
+              <div className="p-4">
+                <input
+                  type="text"
+                  placeholder="Document Name"
+                  value={documentName}
+                  onChange={(e) => setDocumentName(e.target.value)}
+                  className="form-control w-full px-3 py-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div className="flex justify-end p-4 border-t">
+                <button
+                  className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+                  onClick={handleCloseCreateModal}
+                >
+                  Close
+                </button>
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={handleSaveDocument}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* JOIN BUTTON MODAL */}
+        {showCollaborateModal && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-[#201C1C ]">
+            <div className="bg-[#181616] rounded-lg overflow-hidden shadow-lg max-w-md w-full">
+              <div className="p-4 border-b">
+                <h2 className="text-white text-xl font-semibold">Collaborate</h2>
+              </div>
+              <div className="p-4">
+                <input
+                  type="text"
+                  placeholder="Enter Collaboration Code"
+                  value={collaborationCode}
+                  onChange={(e) => setCollaborationCode(e.target.value)}
+                  className="form-control w-full px-3 py-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div className="flex justify-end p-4 border-t">
+                <button
+                  className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+                  onClick={handleCloseCollaborateModal}
+                >
+                  Close
+                </button>
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={handleJoinCollaboration}
+                >
+                  Join
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Render documents */}
-        <div className="document-box">
+        <div className="document-box flex flex-wrap gap-5 mt-5 h-50 w-full">
           {documents.map((document, index) => (
             <div
               key={index}
-              className="document-item"
+              className="document-item flex flex-col items-center justify-center h-40 w-40 border border-gray-300 rounded-md p-2"
               onClick={() => handleDocument(document._id)}
             >
-              <h3>{document.name}</h3>
-              {/* Render other document information here */}
+              <h3 className="absolute font-bold -mt-30 text-left justify-left items-left">{document.name}</h3>
+              <hr className="w-full -mt-20" />
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );
