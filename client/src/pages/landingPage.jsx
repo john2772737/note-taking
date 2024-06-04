@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./LandingPage.css"; // You can add some additional styling in this CSS file
 import { useFirebase } from "../utils/context";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS for modal
+
 import { Button, Modal } from "react-bootstrap"; // Importing Bootstrap components for the modal
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
