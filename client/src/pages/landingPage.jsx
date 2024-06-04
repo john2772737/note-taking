@@ -6,6 +6,8 @@ import { Button, Modal } from "react-bootstrap"; // Importing Bootstrap componen
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
+import { signOut } from "firebase/auth";
+import { auth } from '../utils/firebase';
 
 function LandingPage() {
   const { currentUser } = useFirebase();
@@ -75,7 +77,9 @@ function LandingPage() {
   const handleJoinCollaboration = () => {
     navigate(`/texteditor/${collaborationCode}`); // Navigate to the document page with the collaboration code
   };
-
+const handleLogout =()=>{
+  signOut(auth)
+}
   return (
     <div className="containerl pt-20">
       <Navbar />
@@ -85,7 +89,7 @@ function LandingPage() {
           <li onClick={handleCreateDocument}>Create Note</li>
           <li onClick={handleCollaborate}>Join</li>
         </ul>
-        <button className="absolute text-xl text-white font-bold bottom-5 text-center ml-10">Logout</button>
+        <button className="absolute text-xl text-white font-bold bottom-5 text-center ml-10" onClick={handleLogout}>Logout</button>
       </div>
       <div className="content bg-[#201C1C]">
         <h1 className="text-4xl font-bold text-white">NOTES</h1>
