@@ -17,18 +17,19 @@ io.on("connection", socket => {
   console.log("New client connected");
 
   socket.on("get-document", async documentId => {
-  
-    document= await axios.get(`http://localhost:3001/user/getDocumentData/${documentId}`)
-    console.log(document)
+    console.log(documentId)
+    document= await axios.get(`http://localhost:3000/user/getDocumentData/${documentId}`)
+    
     socket.join(documentId)
-    socket.emit("load-document", document)
+    socket.emit("load-document", document.data)
 
     socket.on("send-changes", delta => {
       socket.broadcast.to(documentId).emit("receive-changes", delta)
     })
 
     socket.on("save-document", async data => {
-      ''
+      
+      await axios.put(`http://localhost:3000/user/updateDocumentData/${documentId}`,{data})
     })
   })
 })

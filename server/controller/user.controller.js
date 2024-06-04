@@ -65,9 +65,24 @@ const getDocumentData = async (req, res) => {
   }
 };
 
+const updateDocumentData = async (req, res) => {
+    const { id } = req.params;
+    const { data } = req.body;
+    try {
+      const document = await Document.findOneAndUpdate({ _id: id }, { data }, { new: true });
+      // The { new: true } option ensures that you get the updated document back
+  
+      res.status(200).json(document);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update document." });
+    }
+  };
+  
+
 module.exports = {
   createUser,
   createDocument,
   getDocuments,
   getDocumentData,
+  updateDocumentData
 };
