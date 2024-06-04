@@ -4,6 +4,7 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import '../assets/styles.css';
 import { io } from "socket.io-client";
+import Navbar from "../component/Navbar2"
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -105,17 +106,19 @@ export default function TextEditor() {
   };
 
   return (
-    <div className="container" ref={wrapperRef}>
+    <div className="container pt-20" ref={wrapperRef}>
       {quill && (
         <>
+          <Navbar/>
           <button className="floating-button" onClick={handleShowDocumentId}>
-            Show Document ID
+            Share Document
           </button>
           {showDocumentId && (
             <div className="floating-button">{documentId}</div>
           )}
         </>
       )}
+      
     </div>
   );
 }
