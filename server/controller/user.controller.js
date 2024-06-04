@@ -2,18 +2,19 @@ const mongoose = require("mongoose");
 const User = require("../models/user.models.js");
 const Document = require("../models/document.models.js");
 const createUser = async (req, res) => {
-  try {
-    const userReq = req.body;
-    const user = await User.findOne({ email: userReq.email }); // Use findOne to find a single document
-    if (user) {
-      return res.status(400).json({ error: "User already exists." });
+    try {
+      const userReq = req.body;
+      const user = await User.findOne({ email: userReq.email });
+      if (user) {
+        return res.status(200).json({ message: "User already exists.", user }); // Return the user if exists
+      }
+      const newUser = await User.create(userReq);
+      res.status(201).json(newUser);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create user." });
     }
-    const newUser = await User.create(userReq);
-    res.status(201).json(newUser);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to create user." });
-  }
-};
+  };
+  
 
 const createDocument = async (req, res) => {
   try {
@@ -78,11 +79,26 @@ const updateDocumentData = async (req, res) => {
     }
   };
   
-
+const getUser =async(req,res)=>{
+    const { firebaseuid } = req.params; 
+  
+        try {
+            const { uid } = req.params;
+            const user = await User.findOne({ firebaseuid: uid });
+            if (user) {
+                res.json({ exists: true });
+            } else {
+                res.json({ exists: false });
+            }
+        }catch(error){
+            res.status(500).json({ error: "Failed to get user." });
+        }
+}
 module.exports = {
   createUser,
   createDocument,
   getDocuments,
   getDocumentData,
-  updateDocumentData
+  updateDocumentData,
+  getUser,
 };

@@ -16,14 +16,15 @@ function UserLogin() {
                 firebaseuid: user.uid,
                 name: user.displayName,
                 email: user.email,
-                imageUrl: user.photoURL // Fixed to use correct property
+                imageUrl: user.photoURL
             });
 
-            if (response.status === 201) {
-                toast.success('User saved to MongoDB');
+            if (response.data.message === "User already exists.") {
+                navigate('/landing'); // Navigate if user already exists
             } else {
-                toast.error(response.statusText);
+                navigate('/landing'); // Navigate for new user creation
             }
+
         } catch (error) {
             console.error('Error saving user to MongoDB:', error.message);
             toast.error('Failed to save user');
@@ -40,7 +41,6 @@ function UserLogin() {
             if (user) {
                 setUser(user);
                 await saveUserToMongoDB(user);
-                navigate('/landing');
             }
         });
 
