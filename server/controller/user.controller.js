@@ -83,8 +83,8 @@ const getUser =async(req,res)=>{
     const { firebaseuid } = req.params; 
   
         try {
-            const { uid } = req.params;
-            const user = await User.findOne({ firebaseuid: uid });
+           
+            const user = await User.findOne({ firebaseuid: firebaseuid });
             if (user) {
                 res.json({ exists: true });
             } else {

@@ -1,57 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { GoogleAuthProvider, signInWithRedirect, onAuthStateChanged } from 'firebase/auth';
+import React, { useState } from 'react';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../utils/firebase';
 import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import PreLoader from '../component/PreLoader';
+
 
 function UserLogin() {
-    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+   
 
-    const saveUserToMongoDB = async (user) => {
+    const handleGoogleSignIn = async () => {
+        const provider = new GoogleAuthProvider();
+        setLoading(true);
         try {
-            const response = await axios.post('http://localhost:3000/user/createUser', {
-                firebaseuid: user.uid,
-                name: user.displayName,
-                email: user.email,
-                imageUrl: user.photoURL
-            });
-
-            if (response.data.message === "User already exists.") {
-                navigate('/landing'); // Navigate if user already exists
-            } else {
-                navigate('/landing'); // Navigate for new user creation
+             const result = await signInWithPopup(auth, provider);
+            const Data= {
+                firebaseuid: result.user.uid,
+                displayName: result.user.displayName,
+                email: result.user.email,
+                imageUrl: result.user.photoURL,
+               
             }
+            const registered= await axios.get(`http://localhost:3000/user/getUser/${Data.firebaseuid}`)
 
+            if (registered.data.exists) {
+               navigate('/landing')
+            } else {
+                await axios.post('http://localhost:3000/user/createUser',Data )
+                navigate('/landing')
+            }
+          
         } catch (error) {
-            console.error('Error saving user to MongoDB:', error.message);
-            toast.error('Failed to save user');
+            console.error('Sign-in error', error);
+            toast.error('Sign-in failed. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleGoogleSignIn = () => {
-        const provider = new GoogleAuthProvider();
-        signInWithRedirect(auth, provider);
-    };
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                setUser(user);
-                await saveUserToMongoDB(user);
-            }
-        });
-
-        return () => unsubscribe();
-    }, [navigate]);
-
     return (
         <div>
-            <PreLoader />
             <Toaster />
-            <button onClick={handleGoogleSignIn}>Sign in with Google</button>
+            {loading ? (
+                <PreLoader /> // Show loader while processing
+            ) : (
+                <button onClick={handleGoogleSignIn}>
+                    Sign in with Google
+                </button>
+            )}
         </div>
     );
 }
