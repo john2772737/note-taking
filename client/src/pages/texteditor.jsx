@@ -4,7 +4,9 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import '../assets/styles.css';
 import { io } from "socket.io-client";
-import Navbar from "../component/Navbar2"
+import logo from '../assets/Logo.png';
+import Navbar from "../component/Navbar";
+import { IoClose } from "react-icons/io5";
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -100,22 +102,37 @@ export default function TextEditor() {
 
   const handleShowDocumentId = () => {
     setShowDocumentId(true);
-    setTimeout(() => {
-      setShowDocumentId(false);
-    }, 3000); // Hide after 3 seconds
+    // setTimeout(() => {
+    //   setShowDocumentId(false);
+    // }, 10000);
   };
+  
+  const closePopup = () => {
+    setShowDocumentId(false);
+  }
 
   return (
     <div className="container pt-20" ref={wrapperRef}>
       {quill && (
         <>
-          <Navbar/>
-          <button className="floating-button" onClick={handleShowDocumentId}>
+          <Navbar />
+          <button className="floating-button"  onClick={handleShowDocumentId}>
             Share Document
           </button>
           {showDocumentId && (
-            <div className="floating-button">{documentId}</div>
+            <div className="floating-button h-[200px] w-100px">
+              <p className="w-[150px]">
+                Share this Document by copying this document ID
+              </p>
+              <br />
+              <p>Document ID:</p>
+              {documentId}
+              <button className="absolute right-2 top-2" onClick={closePopup}><IoClose size={22} /></button>
+            </div>
           )}
+          <button className="floating-button left-10 w-[140px]">
+            Delete Note
+          </button>
         </>
       )}
       

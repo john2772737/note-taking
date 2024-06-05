@@ -16,7 +16,6 @@ function App() {
     
       <Route path="/texteditor/:documentId" element={<PrivateRoute element={TextEditor} />} />
     </Routes>
-    <Footer/>
     </FirebaseProvider>
   );
 }

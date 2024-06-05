@@ -166,7 +166,7 @@ function LandingPage() {
           {documents.map((document, index) => (
             <div
               key={index}
-              className="document-item flex flex-col items-center justify-center h-15 w-60 border border-gray-300 rounded-md p-2 relative overflow-hidden bg-white rounded-lg p-15 shadow-md transition-transform duration-300 ease-in-out cursor-pointer hover:shadow-none hover:transform hover:translate-y-[-5px]"
+              className="document-item flex flex-col items-center justify-center text-center h-[150px] w-[150px] border border-gray-300 rounded-md p-2 relative overflow-hidden bg-white rounded-lg p-15 shadow-md transition-transform duration-300 ease-in-out cursor-pointer hover:shadow-none hover:transform hover:translate-y-[-5px]"
               onClick={() => handleDocument(document._id)}
             >
               <h3 className="absolute font-bold truncate w-full pl-2 px-2">{document.name}</h3>
