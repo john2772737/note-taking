@@ -94,6 +94,36 @@ const getUser =async(req,res)=>{
             res.status(500).json({ error: "Failed to get user." });
         }
 }
+const deleteDocument = async (req,res)=>{
+  const { documentId } = req.params;
+  try {
+    const document = await Document.findOneAndDelete({ _id: documentId });
+    console.log("deleted")
+    res.status(200).json(document);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete document." });
+  }
+}
+
+const checkDocumentUser = async (req,res)=>{
+  const { documentId } = req.params;
+  try {
+    const document = await Document.findOne({ _id: documentId });
+    res.status(200).json(document)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to get user." });
+  }
+}
+
+const checkDocumentexist = async(req,res)=>{
+  const { documentId } = req.params;
+  try {
+    const document = await Document.findOne({ _id: documentId });
+    res.status(200).json(document)
+  } catch (error) {
+    res.status(500).json({ error: "Failed to get user." });
+  }
+}
 module.exports = {
   createUser,
   createDocument,
@@ -101,4 +131,7 @@ module.exports = {
   getDocumentData,
   updateDocumentData,
   getUser,
+  deleteDocument,
+  checkDocumentUser,
+  checkDocumentexist,
 };
