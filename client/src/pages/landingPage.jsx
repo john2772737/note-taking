@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./LandingPage.css"; // You can add some additional styling in this CSS file
 import { useFirebase } from "../utils/context";
 import axios from "axios";
-import { Button, Modal } from "react-bootstrap"; // Importing Bootstrap components for the modal
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../component/Navbar";
@@ -77,21 +75,22 @@ function LandingPage() {
   const handleJoinCollaboration = () => {
     navigate(`/texteditor/${collaborationCode}`); // Navigate to the document page with the collaboration code
   };
-const handleLogout =()=>{
-  signOut(auth)
-}
+  const handleLogout =()=>{
+    signOut(auth)
+  }
+
   return (
-    <div className="containerl pt-20">
+    <div className="flex h-screen pt-20">
       <Navbar />
       <Toaster />
-      <div className="sidebar bg-[#181616] border-r-2 border-[#808080] ">
-        <ul>
-          <li onClick={handleCreateDocument}>Create Note</li>
-          <li onClick={handleCollaborate}>Join</li>
+      <div className="w-200px p-20px shadow-xl hover:shadow-none bg-[#181616] border-r-2 border-[#808080] ">
+        <ul className="list-none p-0 m-0">
+          <li className="mb-10 my-4 px-5 py-2 cursor-pointer text-white bg-blue-500 rounded-lg transition-colors duration-300 hover:bg-white hover:text-black text-center" onClick={handleCreateDocument}>Create Note</li>
+          <li className="my-4 px-5 py-2 cursor-pointer text-white bg-blue-500 rounded-lg transition-colors duration-300 hover:bg-white hover:text-black text-center" onClick={handleCollaborate}>Join</li>
         </ul>
         <button className="absolute text-xl text-white font-bold bottom-5 text-center ml-10" onClick={handleLogout}>Logout</button>
       </div>
-      <div className="content bg-[#201C1C]">
+      <div className="content bg-[#201C1C] flex-1 p-5 overflow-y-auto">
         <h1 className="text-4xl font-bold text-white">NOTES</h1>
 
         {/* CREATE DOCU MODAL */}
@@ -167,11 +166,10 @@ const handleLogout =()=>{
           {documents.map((document, index) => (
             <div
               key={index}
-              className="document-item flex flex-col items-center justify-center h-40 w-40 border border-gray-300 rounded-md p-2"
+              className="document-item flex flex-col items-center justify-center h-15 w-60 border border-gray-300 rounded-md p-2 relative overflow-hidden bg-white rounded-lg p-15 shadow-md transition-transform duration-300 ease-in-out cursor-pointer hover:shadow-none hover:transform hover:translate-y-[-5px]"
               onClick={() => handleDocument(document._id)}
             >
-              <h3 className="absolute font-bold -mt-30 text-left justify-left items-left">{document.name}</h3>
-              <hr className="w-full -mt-20" />
+              <h3 className="absolute font-bold truncate w-full pl-2 px-2">{document.name}</h3>
             </div>
           ))}
         </div>

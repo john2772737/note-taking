@@ -42,16 +42,12 @@ function UserLogin() {
 
     return (
         <div>
+            <PreLoader />
             <Toaster />
-            {loading ? (
-                <PreLoader /> // Show loader while processing
-            ) : (
-                <button onClick={handleGoogleSignIn}>
-                    Sign in with Google
-                </button>
-            )}
+            <button onClick={handleGoogleSignIn}>Sign in with Google</button>
         </div>
-    );
+    );    
+    
 }
 
 export default UserLogin;
