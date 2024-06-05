@@ -5,7 +5,8 @@ import "quill/dist/quill.snow.css";
 import '../assets/styles.css';
 import { io } from "socket.io-client";
 import Navbar from "../component/Navbar2"
-
+import  { useFirebase } from "../utils/context";
+ import {toast,Toaster} from 'react-hot-toast'
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],
@@ -25,11 +26,19 @@ export default function TextEditor() {
   const [socket, setSocket] = useState();
   const [quill, setQuill] = useState();
   const [showDocumentId, setShowDocumentId] = useState(false);
-
+  const {currentUser}= useFirebase()
+  const useruid= currentUser.displayName
   useEffect(() => {
     const s = io("http://localhost:3001");
     setSocket(s);
+   
+    
+    s.on('receive',(useruid)=>{
+      toast.success(useruid + " Has joined. ")
+     
+    })
 
+    s.emit('userConnected', useruid);
     return () => {
       s.disconnect();
     };
@@ -107,9 +116,11 @@ export default function TextEditor() {
 
   return (
     <div className="container pt-20" ref={wrapperRef}>
+    
       {quill && (
         <>
           <Navbar/>
+          <Toaster/>
           <button className="floating-button" onClick={handleShowDocumentId}>
             Share Document
           </button>

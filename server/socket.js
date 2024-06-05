@@ -15,7 +15,11 @@ const io = new Server(socketServer, {
 // Socket.IO connection
 io.on("connection", socket => {
   console.log("New client connected");
-
+  socket.on("userConnected", useruid => {
+    console.log('asd' + useruid);
+    // Broadcast the user ID to all connected clients including the sender
+    io.emit("receive", useruid);
+  });
   socket.on("get-document", async documentId => {
     console.log(documentId)
     document= await axios.get(`http://localhost:3000/user/getDocumentData/${documentId}`)

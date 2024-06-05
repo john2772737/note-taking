@@ -42,7 +42,7 @@ function UserLogin() {
 
     return (
         <div>
-            <PreLoader />
+      
             <Toaster />
             <button onClick={handleGoogleSignIn}>Sign in with Google</button>
         </div>
